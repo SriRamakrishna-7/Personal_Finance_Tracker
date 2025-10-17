@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Finance Tracker</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+</head>
+<body>
+
+<!-- Login Check -->
+<script>
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+</script>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <span class="logo-icon">💰</span>
+            <h1>Personal Finance Tracker</h1>
+        </div>
+        <div class="header-info">
+            <span class="welcome-text">Welcome, <strong id="username">User</strong>!</span>
+            <span class="current-date" id="currentDate"></span>
+            <button onclick="logout()" class="logout-btn">
+                <span class="logout-icon">🚪</span>
+                Logout
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Quick Actions -->
+    <div class="quick-actions-section">
+        <h2>💡 Quick Actions</h2>
+        <div class="quick-actions">
+            <button onclick="quickAddTransaction('income', 'Salary', '3000')" class="quick-btn income">
+                💰 Add Salary
+            </button>
+            <button onclick="quickAddTransaction('expense', 'Food', '50')" class="quick-btn expense">
+                🍔 Add Food Expense
+            </button>
+            <button onclick="quickAddTransaction('expense', 'Transport', '30')" class="quick-btn expense">
+                🚗 Add Transport
+            </button>
+            <button onclick="quickAddTransaction('expense', 'Entertainment', '25')" class="quick-btn expense">
+                🎬 Add Entertainment
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Transaction Form -->
+    <div class="form-section">
+        <h2>Add Transaction</h2>
+        <div class="form">
+            <select id="type" required>
+                <option value="">Select Type</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <select id="category" required></select>
+            <input type="number" id="amount" placeholder="Amount" step="0.01" min="0" required>
+            <input type="text" id="description" placeholder="Description (optional)">
+            <input type="date" id="date" value="">
+            <button onclick="addTransaction()" class="add-btn">Add Transaction</button>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-section">
+        <h2>Financial Summary</h2>
+        <div class="summary-cards">
+            <div class="card income-card">
+                <h3>Total Income</h3>
+                <p id="income">$0.00</p>
+            </div>
+            <div class="card expense-card">
+                <h3>Total Expense</h3>
+                <p id="expense">$0.00</p>
+            </div>
+            <div class="card balance-card">
+                <h3>Balance</h3>
+                <p id="balance">$0.00</p>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Total Transactions</div>
+                <div class="value" id="totalTransactions">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Today's Transactions</div>
+                <div class="value" id="todayTransactions">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Average Amount</div>
+                <div class="value" id="averageAmount">$0.00</div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="resetData()" class="reset-btn">Reset All Data</button>
+            <button onclick="exportData()" class="export-btn">Export Data</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(this)">
+            <button onclick="document.getElementById('importFile').click()" class="import-btn">Import Data</button>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-section">
+        <h2>Income vs Expense</h2>
+        <div class="chart-container">
+            <canvas id="pieChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+    <!-- Transactions Table -->
+    <div class="transactions-section">
+        <h2>Transaction History</h2>
+        <div class="filter-section">
+            <select id="filterType" onchange="filterTransactions()">
+                <option value="">All Types</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <select id="filterCategory" onchange="filterTransactions()">
+                <option value="">All Categories</option>
+            </select>
+            <input type="date" id="filterDateFrom" onchange="filterTransactions()" placeholder="From Date">
+            <input type="date" id="filterDateTo" onchange="filterTransactions()" placeholder="To Date">
+            <button onclick="clearFilters()" class="clear-filter-btn">Clear Filters</button>
+        </div>
+        <table id="transactionsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Popup for messages -->
+<div id="popup" class="popup"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

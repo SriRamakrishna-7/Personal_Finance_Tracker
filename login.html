@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Personal Finance Tracker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-container {
+      display: flex;
+      max-width: 900px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .welcome-section {
+      flex: 1;
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      padding: 50px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .welcome-section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .welcome-section p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .features {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+
+    .feature-icon {
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+
+    .login-section {
+      flex: 1;
+      padding: 50px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .login-header h2 {
+      color: #333;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .login-header p {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .login-form {
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #4facfe;
+      box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .demo-credentials {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .demo-credentials strong {
+      color: #333;
+    }
+
+    /* Popup styling */
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #2ecc71;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      display: none;
+      animation: fadein 0.3s;
+      z-index: 1000;
+    }
+
+    .popup.error { background: #e74c3c; }
+
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        flex-direction: column;
+      }
+      
+      .welcome-section {
+        padding: 30px 20px;
+      }
+      
+      .login-section {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h1>💰 Personal Finance Tracker</h1>
+      <p>Take control of your financial journey with our comprehensive money management solution</p>
+      
+      <div class="features">
+        <div class="feature">
+          <span class="feature-icon">📊</span>
+          <span>Track Income & Expenses</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📈</span>
+          <span>Visual Financial Reports</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">💾</span>
+          <span>Secure Data Storage</span>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📱</span>
+          <span>Responsive Design</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Section -->
+    <div class="login-section">
+      <div class="login-header">
+        <h2>Welcome Back!</h2>
+        <p>Sign in to manage your finances</p>
+      </div>
+
+      <div class="login-form">
+        <div class="form-group">
+          <label for="userid">Username</label>
+          <input type="text" id="userid" placeholder="Enter your username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password">
+        </div>
+
+        <button class="login-btn" id="loginBtn">Sign In</button>
+
+        <div class="demo-credentials">
+          <strong>Demo Credentials:</strong><br>
+          Username: <strong>admin</strong> | Password: <strong>1234</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="popup" class="popup"></div>
+
+  <script>
+    const loginBtn = document.getElementById("loginBtn");
+    loginBtn.addEventListener("click", function() {
+      const user = document.getElementById("userid").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      const validUser = "admin";
+      const validPass = "1234";
+
+      const popup = document.getElementById("popup");
+
+      if(user === "" || pass === "") {
+        popup.textContent = "❌ Please enter both username and password!";
+        popup.className = "popup error";
+        popup.style.display = "block";
+        setTimeout(() => popup.style.display = "none", 3000);
+        return;
+      }
+
+      if (user === validUser && pass === validPass) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("username", user);
+        popup.textContent = "✅ Login successful! Redirecting...";
+        popup.className = "popup";
+        popup.style.display = "block";
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      } else {
+        popup.textContent = "❌ Invalid username or password!";
+        popup.className = "popup error";
+        popup.style.display = "block";
+        setTimeout(() => popup.style.display = "none", 3000);
+      }
+    });
+
+    // Allow login on Enter key press
+    document.getElementById("password").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        loginBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
